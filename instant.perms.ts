@@ -3,59 +3,44 @@ import type { InstantRules } from '@dorilama/instantdb-vue'
 const rules = {
   "ingredients": {
     "allow": {
-      "view": "isOwner",
-      "create": "isOwner",
-      "update": "isOwner && isStillOwner",
-      "delete": "isOwner",
-    },
-    "bind": [
-      "isOwner", "auth.id != null && auth.id == data.ref('$user.id')",
-      "isStillOwner", "auth.id != null && auth.id == newData.ref('$user.id')"
-    ]
+      "view": "auth.id != null",
+      "create": "auth.id != null",
+      "update": "auth.id != null",
+      "delete": "auth.id != null",
+    }
   },
   "compound_ingredients": {
     "allow": {
-      "view": "isIngredientOwner",
-      "create": "isIngredientOwner",
-      "update": "isIngredientOwner",
-      "delete": "isIngredientOwner",
-    },
-    "bind": [
-      "isIngredientOwner", "auth.id != null && auth.id == data.ref('ingredient.$user.id')"
-    ]
+      "view": "auth.id != null",
+      "create": "auth.id != null",
+      "update": "auth.id != null",
+      "delete": "auth.id != null",
+    }
   },
   "recipes": {
     "allow": {
-      "view": "isOwner",
-      "create": "isOwner", 
-      "update": "isOwner && isStillOwner",
-      "delete": "isOwner",
-    },
-    "bind": [
-      "isOwner", "auth.id != null && auth.id == data.ref('$user.id')",
-      "isStillOwner", "auth.id != null && auth.id == newData.ref('$user.id')"
-    ]
+      "view": "auth.id != null",
+      "create": "auth.id != null",
+      "update": "auth.id != null",
+      "delete": "auth.id != null",
+    }
   },
   "recipe_ingredients": {
     "allow": {
-      "view": "isRecipeOwner",
-      "create": "isRecipeOwner",
-      "update": "isRecipeOwner", 
-      "delete": "isRecipeOwner",
-    },
-    "bind": [
-      "isRecipeOwner", "auth.id != null && auth.id == data.ref('recipe.$user.id')"
-    ]
+      "view": "auth.id != null",
+      "create": "auth.id != null",
+      "update": "auth.id != null",
+      "delete": "auth.id != null",
+    }
   },
   "$users": {
     "allow": {
       "view": "auth.id != null && auth.id == data.id",
-      "create": "false", // Users are created automatically by auth
-      "update": "auth.id != null && auth.id == data.id",
-      "delete": "false", // Prevent user deletion
+      "create": "false",
+      "update": "false",
+      "delete": "false",
     }
   },
-  // Allow authenticated users to create attributes during development
   "attrs": {
     "allow": {
       "create": "auth.id != null"
