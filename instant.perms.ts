@@ -3,35 +3,47 @@ import type { InstantRules } from '@dorilama/instantdb-vue'
 const rules = {
   "ingredients": {
     "allow": {
-      "view": "auth.id != null",
+      "view": "isOwner",
       "create": "auth.id != null",
-      "update": "auth.id != null",
-      "delete": "auth.id != null",
-    }
+      "update": "isOwner",
+      "delete": "isOwner",
+    },
+    "bind": [
+      "isOwner", "auth.id != null && auth.id in data.ref('$user.id')"
+    ]
   },
   "compound_ingredients": {
     "allow": {
-      "view": "auth.id != null",
+      "view": "isIngredientOwner",
       "create": "auth.id != null",
-      "update": "auth.id != null",
-      "delete": "auth.id != null",
-    }
+      "update": "isIngredientOwner",
+      "delete": "isIngredientOwner",
+    },
+    "bind": [
+      "isIngredientOwner", "auth.id != null && auth.id in data.ref('ingredient.$user.id')"
+    ]
   },
   "recipes": {
     "allow": {
-      "view": "auth.id != null",
+      "view": "isOwner",
       "create": "auth.id != null",
-      "update": "auth.id != null",
-      "delete": "auth.id != null",
-    }
+      "update": "isOwner",
+      "delete": "isOwner",
+    },
+    "bind": [
+      "isOwner", "auth.id != null && auth.id in data.ref('$user.id')"
+    ]
   },
   "recipe_ingredients": {
     "allow": {
-      "view": "auth.id != null",
+      "view": "isRecipeOwner",
       "create": "auth.id != null",
-      "update": "auth.id != null",
-      "delete": "auth.id != null",
-    }
+      "update": "isRecipeOwner",
+      "delete": "isRecipeOwner",
+    },
+    "bind": [
+      "isRecipeOwner", "auth.id != null && auth.id in data.ref('recipe.$user.id')"
+    ]
   },
   "$users": {
     "allow": {
